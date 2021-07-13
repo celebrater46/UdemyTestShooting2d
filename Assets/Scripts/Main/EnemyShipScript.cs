@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyShipScript : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EnemyShipScript : MonoBehaviour
     // private AudioClip explosionSound; // private var does not appear on the inspector
     // public AudioClip explosionSound;
     // public AudioClip dedenSound;
+    private float offset;
     
     // Start is called before the first frame update
     void Start()
@@ -18,12 +20,19 @@ public class EnemyShipScript : MonoBehaviour
         // gameManagerScriptMain = GetComponent<GameManagerScriptMain>(); // Could not added. Because this method is valid only when own component.
         gameManagerScriptMain = GameObject.Find("GameManager").GetComponent<GameManagerScriptMain>();
         // audioSource = GetComponent<AudioSource>();
+        offset = Random.Range(0, 2f * Mathf.PI); // Make Timing of Wave Random
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position -= new Vector3(0, 2 * Time.deltaTime, 0);
+        // transform.position -= new Vector3(0, 2 * Time.deltaTime, 0);
+        // transform.position -= new Vector3(Mathf.Cos(Time.frameCount * 0.01f) * 0.01f, 2 * Time.deltaTime, 0);
+        transform.position -= new Vector3(Mathf.Cos(Time.frameCount * 0.01f + offset) * 0.01f, 2 * Time.deltaTime, 0);
+        if (transform.position.y < -6)
+        {
+            Destroy(gameObject);
+        }
         
     }
 

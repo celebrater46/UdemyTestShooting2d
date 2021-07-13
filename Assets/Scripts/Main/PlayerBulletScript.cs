@@ -14,5 +14,9 @@ public class PlayerBulletScript : MonoBehaviour
     void Update()
     {
         transform.position += new Vector3(0, 3, 0) * Time.deltaTime * 4f;
+        if (transform.position.y > 6)
+        {
+            Destroy(gameObject);
+        }
     }
 }
