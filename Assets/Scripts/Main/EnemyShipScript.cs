@@ -6,12 +6,13 @@ using UnityEngine;
 public class EnemyShipScript : MonoBehaviour
 {
     public GameObject explosionPrefab;
-    public 
+    private GameManagerScriptMain gameManagerScriptMain;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        // gameManagerScriptMain = GetComponent<GameManagerScriptMain>(); // Could not added
+        gameManagerScriptMain = GameObject.Find("GameManager").GetComponent<GameManagerScriptMain>();
     }
 
     // Update is called once per frame
@@ -28,5 +29,16 @@ public class EnemyShipScript : MonoBehaviour
         Destroy(this.gameObject);
         Destroy(other.gameObject);
         Destroy(gameObject);
+        // if (other.tag == "Player")
+        // {
+        //     gameManagerScriptMain.AddScore();
+        // }
+        if (other.CompareTag("Bullet"))
+        {
+            gameManagerScriptMain.AddScore();
+        } else if (other.CompareTag("Player"))
+        {
+            Instantiate(explosionPrefab, other.transform.position, other.transform.rotation);
+        }
     }
 }
