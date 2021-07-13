@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class EnemyShipScript : MonoBehaviour
 {
+    public GameObject explosionPrefab;
+    public 
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +23,10 @@ public class EnemyShipScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("You got him!!");
+        // Debug.Log("You got him!!");
+        Instantiate(explosionPrefab, transform.position, transform.rotation);
         Destroy(this.gameObject);
         Destroy(other.gameObject);
+        Destroy(gameObject);
     }
 }

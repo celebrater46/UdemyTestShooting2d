@@ -22,8 +22,12 @@ public class PlayerShipScript : MonoBehaviour
 
     void Move()
     {
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
+        // float x = Input.GetAxis("Horizontal");
+        // float y = Input.GetAxis("Vertical");
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
+        Debug.Log(x);
+        Debug.Log(y);
         transform.position += new Vector3(x, y, 0) * Time.deltaTime * 6f; // Time.deltaTime adjust the player speed regardless of Frame rate.
     }
     void Shot()
