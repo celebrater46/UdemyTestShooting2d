@@ -39,6 +39,9 @@ public class EnemyShipScript : MonoBehaviour
         } else if (other.CompareTag("Player"))
         {
             Instantiate(explosionPrefab, other.transform.position, other.transform.rotation);
+            // Invoke("gameManagerScriptMain.GameOver", 1.5f);
+            // Invoke("GameOver", 1.5f);
+            gameManagerScriptMain.GameOver();
         }
     }
 }
