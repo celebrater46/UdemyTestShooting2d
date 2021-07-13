@@ -583,6 +583,7 @@ GameObject:
   - component: {fileID: 906096428}
   - component: {fileID: 906096427}
   - component: {fileID: 906096430}
+  - component: {fileID: 906096431}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -689,6 +690,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerGun: {fileID: 804479776}
   bulletPrefab: {fileID: 2425508775988550546, guid: 917cd9db00a128b41b96cd1f1570a802, type: 3}
+--- !u!58 &906096431
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906096426}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.2
 --- !u!1 &1003232128
 GameObject:
   m_ObjectHideFlags: 0
