@@ -6,11 +6,14 @@ public class PlayerShipScript : MonoBehaviour
 {
     public Transform playerGun;
     public GameObject bulletPrefab;
-    
+    private AudioSource audioSource;
+    public AudioClip shotSound;
+    // public AudioClip explosionSound;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,6 +39,7 @@ public class PlayerShipScript : MonoBehaviour
         {
             // Debug.Log("Fire!");
             Instantiate(bulletPrefab, playerGun.position, transform.rotation);
+            audioSource.PlayOneShot(shotSound);
         }
     }
 }
