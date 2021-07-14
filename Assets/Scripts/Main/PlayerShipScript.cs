@@ -9,12 +9,16 @@ public class PlayerShipScript : MonoBehaviour
     public GameObject bulletPrefab;
     private AudioSource audioSource;
     public AudioClip shotSound;
+    public GameObject explosionPrefab;
+    public GameManagerScriptMain gameManagerScriptMain;
+    
     // public AudioClip explosionSound;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        gameManagerScriptMain = GameObject.Find("GameManager").GetComponent<GameManagerScriptMain>();
     }
 
     // Update is called once per frame
@@ -50,6 +54,17 @@ public class PlayerShipScript : MonoBehaviour
             // Debug.Log("Fire!");
             Instantiate(bulletPrefab, playerGun.position, transform.rotation);
             audioSource.PlayOneShot(shotSound);
+        }
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("EnemyBullet"))
+        {
+            Instantiate(explosionPrefab, transform.position, transform.rotation);
+            Destroy(gameObject);
+            Destroy(other.gameObject);
+            gameManagerScriptMain.GameOver();
         }
     }
 }

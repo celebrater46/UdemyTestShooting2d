@@ -252,5 +252,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 8696649140630898994, guid: 7d5cf7ab2a056144c9302234fe4b824c, type: 3}
-  explosionSound: {fileID: 8300000, guid: 6a6003a69f2c6d94d8a2dbcfe6aa8f5c, type: 3}
-  dedenSound: {fileID: 8300000, guid: aee8105f4547cba449fa82f6bb03dac3, type: 3}
+  enemyBulletPrefab: {fileID: 3067594617049287140, guid: 14e6fc5cd1b5efc409a68961b1f34105, type: 3}
