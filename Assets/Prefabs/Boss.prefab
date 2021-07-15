@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 6
   m_Sprite: {fileID: -6063193139565258881, guid: bf3bdd2147b394bc2b771f2556f0b49d, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.07715416, a: 1}
+  m_Color: {r: 0, g: 0.8738847, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -252,4 +252,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 8696649140630898994, guid: 7d5cf7ab2a056144c9302234fe4b824c, type: 3}
-  enemyBulletPrefab: {fileID: 3067594617049287140, guid: 14e6fc5cd1b5efc409a68961b1f34105, type: 3}
+  bossBulletPrefab: {fileID: 5880622656333494219, guid: bcaa656b67175e946ad8dfda9504ef12, type: 3}
