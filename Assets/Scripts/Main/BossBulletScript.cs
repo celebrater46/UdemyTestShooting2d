@@ -47,5 +47,12 @@ public class BossBulletScript : MonoBehaviour
     {
         // transform.position -= new Vector3(0, 6, 0) * Time.deltaTime;
         transform.position += new Vector3(x, y, 0) * Time.deltaTime;
+        if (transform.position.x > 8 ||
+            transform.position.x < -8 ||
+            transform.position.y > 6 ||
+            transform.position.y < -6)
+        {
+            Destroy(gameObject);
+        }
     }
 }

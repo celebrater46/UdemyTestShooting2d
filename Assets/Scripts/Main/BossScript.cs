@@ -30,8 +30,9 @@ public class BossScript : MonoBehaviour
         // Shot(Mathf.PI * 1.5f); // 45 degrees (downward)
         // Shot(Mathf.PI * 1.25f); // 45 degrees (right downward)
 
-        ShotN(10, 4f);
-
+        // ShotN(10, 4f);
+        // StartCoroutine(ShotBulletsWavy(4, 8));
+        StartCoroutine(EnemyCpu());
     }
 
     // Update is called once per frame
@@ -66,13 +67,46 @@ public class BossScript : MonoBehaviour
         bullet.Setting(angle, speed);
     }
 
-    private void ShotN(int count, float speed)
+    // private void ShotN(int number, float speed)
+    // {
+    //     // int number = 8;
+    //     for (int i = 0; i < number; i++)
+    //     {
+    //         float angle = Mathf.PI / number * 2 * i;
+    //         Shot(angle, speed);
+    //     }
+    // }
+    
+    IEnumerator ShotN(int number, float speed, float delay)
     {
-        // int count = 8;
+        // int number = 8;
+        for (int i = 0; i < number; i++)
+        {
+            yield return new WaitForSeconds(delay);
+            float angle = Mathf.PI / number * 2 * i;
+            Shot(angle, speed);
+        }
+    }
+
+    IEnumerator ShotBulletsWavy(int count, int number, float speed, float delay)
+    {
         for (int i = 0; i < count; i++)
         {
-            float angle = Mathf.PI / count * 2 * i;
-            Shot(angle, speed);
+            yield return new WaitForSeconds(0.3f);
+            ShotN(number, speed, delay);
+        }
+    }
+
+    IEnumerator EnemyCpu()
+    {
+        while (true)
+        {
+            yield return ShotBulletsWavy(4, 8, 6, 0);
+            yield return new WaitForSeconds(1f);
+            yield return ShotBulletsWavy(4, 16, 4, 0);
+            yield return new WaitForSeconds(1.5f);
+            yield return ShotBulletsWavy(4, 6, 8, 0.2f);
+            yield return new WaitForSeconds(1f);
         }
     }
 }
