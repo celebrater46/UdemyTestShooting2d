@@ -8,12 +8,16 @@ public class BossScript : MonoBehaviour
     private GameManagerScriptMain gameManagerScriptMain;
     // public GameObject bossBulletPrefab;
     public BossBulletScript bossBulletPrefab;
+    GameObject player;
     
     // Start is called before the first frame update
     void Start()
     {
         // Instantiate(bossBulletPrefab, transform.position, transform.rotation);
         gameManagerScriptMain = GameObject.Find("GameManager").GetComponent<GameManagerScriptMain>();
+        // player = GameObject.Find("Player").GetComponent<GameObject>();
+        // player = GameObject.Find("Player");
+        player = GameObject.Find("PlayerShip"); // Needs to be the same name as Hierarchy
         // Shot();
         // Shot(Mathf.PI / 4f); // 45 degrees (right upward)
         // Shot(-Mathf.PI / 4f); // 45 degrees (right downward)
@@ -31,7 +35,7 @@ public class BossScript : MonoBehaviour
         // Shot(Mathf.PI * 1.25f); // 45 degrees (right downward)
 
         // ShotN(10, 4f);
-        // StartCoroutine(ShotBulletsWavy(4, 8));
+        // StartCoroutine(ShotBulletsRepeat(4, 8));
         StartCoroutine(EnemyCpu());
     }
 
@@ -77,8 +81,9 @@ public class BossScript : MonoBehaviour
     //     }
     // }
     
-    IEnumerator ShotN(int number, float speed, float delay)
+    private IEnumerator ShotNum(int number, float speed, float delay)
     {
+        // Debug.Log("ShotN is working");
         // int number = 8;
         for (int i = 0; i < number; i++)
         {
@@ -87,25 +92,88 @@ public class BossScript : MonoBehaviour
             Shot(angle, speed);
         }
     }
-
-    IEnumerator ShotBulletsWavy(int count, int number, float speed, float delay)
+    
+    private IEnumerator ShotNumRepeat(int count, int number, float speed, float delay, float interval)
     {
+        // Debug.Log("ShotBulletsRepeat is working");
         for (int i = 0; i < count; i++)
         {
-            yield return new WaitForSeconds(0.3f);
-            ShotN(number, speed, delay);
+            yield return new WaitForSeconds(interval);
+            // yield return ShotN(number, speed, delay);
+            yield return ShotNum(number, speed, delay);
+        }
+    }
+    
+    private IEnumerator ShotCurve(int number, float speed, float delay)
+    {
+        for (int i = 0; i < number; i++)
+        {
+            yield return new WaitForSeconds(delay);
+            float angle = Mathf.PI / number * 2 * i;
+            Shot(angle - Mathf.PI / 2f, speed);
+            Shot(-angle - Mathf.PI / 2f, speed);
+        }
+    }
+    
+    private IEnumerator ShotCurveRepeat(int count, int number, float speed, float delay, float interval)
+    {
+        // Debug.Log("ShotBulletsRepeat is working");
+        for (int i = 0; i < count; i++)
+        {
+            yield return new WaitForSeconds(interval);
+            // yield return ShotN(number, speed, delay);
+            yield return ShotCurve(number, speed, delay);
+        }
+    }
+    
+    private void ShotAim(float speed)
+    {
+        Debug.Log("ShotAim() is working");
+        Debug.Log(player.transform.position.y);
+        // Get relative position from Boss to Player
+        Vector3 relativePosition = player.transform.position - transform.position;
+
+        // Arctangent leads the direction
+        float direction = Mathf.Atan2(relativePosition.y, relativePosition.x);
+        
+        Shot(direction, speed);
+        
+        // for (int i = 0; i < number; i++)
+        // {
+        //     float angle = Mathf.PI / number * 2 * i;
+        //     Shot(angle, speed);
+        // }
+    }
+    
+    private IEnumerator ShotAimRepeat(int count, float speed, float interval)
+    {
+        // Debug.Log("ShotBulletsRepeat is working");
+        for (int i = 0; i < count; i++)
+        {
+            yield return new WaitForSeconds(interval);
+            // yield return ShotN(number, speed, delay);
+            ShotAim(speed);
         }
     }
 
-    IEnumerator EnemyCpu()
+    private IEnumerator EnemyCpu()
     {
+        while (transform.position.y > 2f)
+        {
+            transform.position -= new Vector3(0, 1, 0) * Time.deltaTime * 3f;
+            yield return null; // Wait 0.02s (1 Frame)
+        }
+        
+        // Debug.Log("EnemyCpu is working");
         while (true)
         {
-            yield return ShotBulletsWavy(4, 8, 6, 0);
+            yield return ShotAimRepeat(16, 8, 0.1f);
             yield return new WaitForSeconds(1f);
-            yield return ShotBulletsWavy(4, 16, 4, 0);
+            yield return ShotNumRepeat(4, 16, 8, 0.01f, 0.1f);
+            yield return new WaitForSeconds(1f);
+            yield return ShotCurveRepeat(8, 24, 8, 0.01f, 0.07f);
             yield return new WaitForSeconds(1.5f);
-            yield return ShotBulletsWavy(4, 6, 8, 0.2f);
+            yield return ShotNumRepeat(16, 6, 16, 0.005f, 0.05f);
             yield return new WaitForSeconds(1f);
         }
     }
