@@ -156,6 +156,23 @@ public class BossScript : MonoBehaviour
         }
     }
 
+    private IEnumerator ShotAimShower(int count, float speed, float interval)
+    {
+        Vector3 relativePosition = player.transform.position - transform.position;
+
+        // Arctangent leads the direction
+        float direction = Mathf.Atan2(relativePosition.y, relativePosition.x);
+        int bulletCount = count;
+        
+        for (int i = 0; i < count; i++)
+        {
+            float angle = i * (2 * Mathf.PI / bulletCount);
+            yield return new WaitForSeconds(interval);
+            // yield return ShotN(number, speed, delay);
+            Shot(direction - angle, speed);
+        }
+    }
+
     private IEnumerator EnemyCpu()
     {
         while (transform.position.y > 2f)
@@ -167,6 +184,8 @@ public class BossScript : MonoBehaviour
         // Debug.Log("EnemyCpu is working");
         while (true)
         {
+            yield return ShotAimShower(6, 6, 0.1f);
+            yield return new WaitForSeconds(1f);
             yield return ShotAimRepeat(16, 8, 0.1f);
             yield return new WaitForSeconds(1f);
             yield return ShotNumRepeat(4, 16, 8, 0.01f, 0.1f);

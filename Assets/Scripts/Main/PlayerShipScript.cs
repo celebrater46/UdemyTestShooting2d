@@ -11,6 +11,8 @@ public class PlayerShipScript : MonoBehaviour
     public AudioClip shotSound;
     public GameObject explosionPrefab;
     public GameManagerScriptMain gameManagerScriptMain;
+    private string shotKey = "space";
+    private string shotKey2 = "joystick button 0";
     
     // public AudioClip explosionSound;
 
@@ -49,7 +51,7 @@ public class PlayerShipScript : MonoBehaviour
     }
     void Shot()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(shotKey) || Input.GetKeyDown(shotKey2))
         {
             // Debug.Log("Fire!");
             Instantiate(bulletPrefab, playerGun.position, transform.rotation);
