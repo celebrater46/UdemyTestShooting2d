@@ -8,7 +8,7 @@ public class BossScript : MonoBehaviour
     private GameManagerScriptMain gameManagerScriptMain;
     // public GameObject bossBulletPrefab;
     public BossBulletScript bossBulletPrefab;
-    GameObject player;
+    GameObject player; 
     
     // Start is called before the first frame update
     void Start()
