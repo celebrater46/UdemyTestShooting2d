@@ -156,7 +156,7 @@ public class BossScript : MonoBehaviour
         }
     }
 
-    private IEnumerator ShotAimShower(int count, float speed, float interval)
+    private void ShotAimShower(int count, float speed)
     {
         Vector3 relativePosition = player.transform.position - transform.position;
 
@@ -166,10 +166,21 @@ public class BossScript : MonoBehaviour
         
         for (int i = 0; i < count; i++)
         {
-            float angle = i * (2 * Mathf.PI / bulletCount);
-            yield return new WaitForSeconds(interval);
+            float angle = (i - bulletCount / 2f) * ((Mathf.PI / 2f) / bulletCount);
+            // yield return new WaitForSeconds(interval);
             // yield return ShotN(number, speed, delay);
             Shot(direction - angle, speed);
+        }
+    }
+    
+    private IEnumerator ShotAimShowerRepeat(int count, float speed, float interval)
+    {
+        // Debug.Log("ShotBulletsRepeat is working");
+        for (int i = 0; i < count; i++)
+        {
+            yield return new WaitForSeconds(interval);
+            // yield return ShotN(number, speed, delay);
+            ShotAimShower(count, speed);
         }
     }
 
@@ -184,7 +195,7 @@ public class BossScript : MonoBehaviour
         // Debug.Log("EnemyCpu is working");
         while (true)
         {
-            yield return ShotAimShower(6, 6, 0.1f);
+            yield return ShotAimShowerRepeat(7, 10, 0.1f);
             yield return new WaitForSeconds(1f);
             yield return ShotAimRepeat(16, 8, 0.1f);
             yield return new WaitForSeconds(1f);
